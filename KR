@@ -1,0 +1,107 @@
+drop database VetClinika;
+
+CREATE DATABASE VetClinika;
+
+use VetClinika;
+
+CREATE TABLE GroupsOfDrugs (
+GroupsOfDrugsID int NOT NULL AUTO_INCREMENT,
+GroupsOfDrugsName VARCHAR(255),
+PRIMARY KEY (GroupsOfDrugsID)
+);
+
+INSERT INTO GroupsOfDrugs (GroupsOfDrugsName) VALUES ('Vitamins');
+INSERT INTO GroupsOfDrugs (GroupsOfDrugsName) VALUES ('Care products');
+INSERT INTO GroupsOfDrugs (GroupsOfDrugsName) VALUES ('Medicament');
+INSERT INTO GroupsOfDrugs (GroupsOfDrugsName) VALUES ('Painkillers');
+
+CREATE TABLE Providers (
+ProvidersID int NOT NULL AUTO_INCREMENT,
+ProvidersName VARCHAR(255),
+City VARCHAR(255),
+INN int(12),
+Adress VARCHAR(255),
+Phone VARCHAR(45),
+PRIMARY KEY (ProvidersID)
+);
+
+INSERT INTO Providers (ProvidersName, City, INN, Adress, Phone) VALUES ('Biosintez','Penza','5874965487','45 Lenina St.', '547896');
+INSERT INTO Providers (ProvidersName, City, INN, Adress, Phone) VALUES ('Vita','Pskov','7458961458','76  Mira St.', '748596');
+INSERT INTO Providers (ProvidersName, City, INN, Adress, Phone) VALUES ('Vitaprom','Moscow','1452857496','65 Sokolniki St.', '124578');
+INSERT INTO Providers (ProvidersName, City, INN, Adress, Phone) VALUES 
+('Novartis','Penza','5858965478','54  Pushkina St.', '965241');
+INSERT INTO Providers (ProvidersName, City, INN, Adress, Phone) VALUES ('Nika','Perm','4785214593','89 Gagarina St.', '123698');
+
+CREATE TABLE Drugs (
+DrugsID int NOT NULL AUTO_INCREMENT,
+DrugsName VARCHAR(255),
+ProvidersID int,
+GroupsOfDrugsID int,
+Photo VARCHAR(255),
+PRIMARY KEY (DrugsID)
+);
+
+INSERT INTO Drugs (DrugsName,ProvidersID, GroupsOfDrugsID,Photo) VALUES ('Vata',2,2,'Pic1.pic');
+INSERT INTO Drugs (DrugsName,ProvidersID, GroupsOfDrugsID,Photo) VALUES ('IOD',2,4,'Pic2.pic');
+INSERT INTO Drugs (DrugsName,ProvidersID, GroupsOfDrugsID,Photo) VALUES ('Vizin',3,2,'Pic3.pic');
+INSERT INTO Drugs (DrugsName,ProvidersID, GroupsOfDrugsID,Photo) VALUES ('Bint',2,5,'Pic4.pic');
+
+CREATE TABLE MOL (
+MOLID int NOT NULL AUTO_INCREMENT,
+FIO VARCHAR(255),
+Functions VARCHAR(255),
+Phone VARCHAR(45),
+PRIMARY KEY (MOLID)
+);
+
+INSERT INTO MOL (FIO, Functions, Phone) VALUES ('Petrov Vitalii Yanovich', 'hirurg', '12547854789'); 
+INSERT INTO MOL (FIO, Functions, Phone) VALUES ('Ivanov Ivan Ivanovich', 'hirurg', '1567567789'); 
+INSERT INTO MOL (FIO, Functions, Phone) VALUES ('Ivanova Yana Viktorovna', 'medsestra', '6456546789');
+
+
+CREATE TABLE CustomDrugs (
+CustomDrugsID int NOT NULL AUTO_INCREMENT,
+DataCustom DATE,
+MOL int,
+PRIMARY KEY (CustomDrugsID)
+);
+
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-02-23', 1); 
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-04-03', 3); 
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-02-03', 3); 
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-04-13', 2); 
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-01-26', 1); 
+INSERT INTO CustomDrugs (DataCustom, MOL) VALUES ('2016-04-03', 2); 
+
+
+CREATE TABLE BookComing (
+IDRecord int NOT NULL AUTO_INCREMENT,
+CustomDrugsID int,
+DrugsID int,
+Price numeric(15,2),
+Sum int,
+DateOfManufacture DATE,
+ExpirationDate DATE,
+PRIMARY KEY (IDRecord)
+);
+
+INSERT INTO BookComing (CustomDrugsID, DrugsID, Price, Sum, DateOfManufacture, ExpirationDate ) VALUES (2,2,10.00,3,'2015-01-26','2021-01-26');
+INSERT INTO BookComing (CustomDrugsID, DrugsID, Price, Sum, DateOfManufacture, ExpirationDate ) VALUES (2,2,15.00,3,'2016-01-26','2022-01-26');
+INSERT INTO BookComing (CustomDrugsID, DrugsID, Price, Sum, DateOfManufacture, ExpirationDate ) VALUES (3,3,150.00,3,'2015-01-26','2021-01-26');
+INSERT INTO BookComing (CustomDrugsID, DrugsID, Price, Sum, DateOfManufacture, ExpirationDate ) VALUES (3,3,116.00,3,'2016-02-26','2022-02-26');
+INSERT INTO BookComing (CustomDrugsID, DrugsID, Price, Sum, DateOfManufacture, ExpirationDate ) VALUES (2,2,18.00,3,'2016-02-24','2022-02-24');
+
+
+CREATE TABLE  BookDelivery (
+RecordID int NOT NULL AUTO_INCREMENT,
+DateDelivery DATE,
+IDRecord int,
+Sum int,
+MOL int,
+PRIMARY KEY (RecordID)
+);
+INSERT INTO BookDelivery (DateDelivery, IDRecord, Sum, MOL) VALUES ('2016-04-25',1, 5, 1);
+INSERT INTO BookDelivery (DateDelivery, IDRecord, Sum, MOL) VALUES ('2016-04-04',1, 5, 1);
+INSERT INTO BookDelivery (DateDelivery, IDRecord, Sum, MOL) VALUES ('2016-03-12',1, 5, 1);
+INSERT INTO BookDelivery (DateDelivery, IDRecord, Sum, MOL) VALUES ('2016-04-23',1, 5, 1);
+INSERT INTO BookDelivery (DateDelivery, IDRecord, Sum, MOL) VALUES ('2016-01-14',1, 5, 1);
